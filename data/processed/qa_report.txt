@@ -1,0 +1,107 @@
+NGX-DOL QA REPORT
+============================================================
+
+1. PARSE LOGS (one row per source file)
+  parse_log_pricelist.csv: 2919 files; ok=2815, no_price_rows=75, duplicate_skipped=29
+  parse_log_officiallist.csv: 2928 files; ok=2881, duplicate_skipped=25, no_rows=22
+  parse_log_weekly.csv: 598 files; ok=571, duplicate_skipped=15, no_broker_rows=12
+  parse_log_dailysummary.csv: 2954 files; ok_mcap=2515, ok_trades=423, no_rows=13, duplicate_skipped=3
+
+2. COVERAGE
+  3033 trading days, 2014-06-30 to 2026-10-30
+  497,038 security-day rows; 328,347 with trading; 256 symbols
+  calendar gaps > 5 days: 3
+    gap ending 2014-07-11 (8 days)
+    gap ending 2015-12-29 (6 days)
+    gap ending 2023-12-28 (7 days)
+  by year:
+      days  listed  traded
+date                      
+2014   121   23739   13095
+2015   247   47377   24718
+2016   247   44914   23480
+2017   246   40702   24282
+2018   248   39538   26001
+2019   246   39103   24981
+2020   249   40265   23984
+2021   247   35706   25691
+2022   246   33836   26385
+2023   241   31113   27516
+2024   244   31605   29735
+2025   245   33234   31213
+2026   206   26679   27266
+  traded rows with no Official List entry that day: 29,227 (8.9% of traded rows)
+    most common such symbols: MCNICHOLS, TIP, CHELLARAM, LIVINGTRUST, MECURE, JAIZBANK, JULI, ZICHIS, UPDCREIT, VANLEER
+
+3. RANGE AND SANITY CHECKS
+  close <= 0: 0
+  high < low: 0
+  close outside [low, high]: 25
+  VWAP outside [0.8*low, 1.2*high]: 166
+  |return| > 11% (flagged, excluded from Amihud): 74
+  value == 0 on traded rows: 187
+  largest flagged returns (likely corporate actions; verify):
+      date     symbol  pclose  close    ret     close_src
+2018-12-27  VALUEFUND     NaN 103.20 205.40 official_list
+2018-12-18   UHOMREIT     NaN  45.20  89.40 official_list
+2015-04-27    UNHOMES     NaN   6.40  11.80 official_list
+2022-07-01 MULTIVERSE     NaN   2.10   9.50 official_list
+2026-10-08 STERLINGNG     NaN  77.00   9.00 official_list
+2015-04-20   UNITYBNK     NaN   5.00   9.00 official_list
+2020-11-04  SUNUASSUR     NaN   1.00   4.00 official_list
+2025-12-17 ASOSAVINGS     NaN   3.21   2.00 official_list
+2023-11-27 CONHALLPLC     0.5   1.09   1.18    price_list
+2021-12-29        NEM     NaN   4.84   1.00 official_list
+
+4. RECONCILIATION: Price List vs NGX Daily Summary (same stock, same day)
+  matched security-days: 42,798 (Daily Summary carries trade rows in 2014-2018)
+  deals identical: 100.0%  volume identical: 100.0%  value within NGN 1: 99.54%
+
+5. RECONCILIATION: daily volumes summed by week vs NGX weekly Activity Summary
+  all security-weeks compared: 73,989; volume exact: 78.74%; within 1%: 79.96%
+  weeks where every trading day has a full price list: 443 weeks, 57,384 security-weeks; volume exact 97.89%, deals exact 97.88%
+  examples (complete weeks) where they differ:
+  week_end     symbol  deals  deals_wk      volume   volume_wk
+2015-01-16   UNITYBNK    3.0       2.0     24300.0     12750.0
+2015-09-23  GUINEAINS    4.0       3.0  12006179.0      6179.0
+2015-10-23 UNIVINSURE    3.0       1.0    688000.0    600000.0
+2017-07-28        7UP   69.0      86.0    481982.0    499892.0
+2017-07-28     ACCESS  913.0    1236.0 137531251.0 183976959.0
+2017-07-28   AFRIPRUD  320.0     422.0  12130498.0  14539037.0
+2017-07-28   AGLEVENT   16.0      20.0     68500.0     83928.0
+2017-07-28      AIICO   89.0     106.0   7223977.0   9289164.0
+  (Mismatch arises when a weekly file covers a holiday-shortened week or a daily file is missing.)
+
+6. MARKET CAPITALISATION AND IDENTIFIERS
+  rows with exchange-reported market cap: 404,535; first date: 2016-03-16
+  rows with any market cap (reported or carried shares): 82.53%
+  rows with ISIN: 70.28%  (144 symbols; snapshot covers currently listed issuers only)
+  market-cap rows symbol mapping: name_dictionary=334123, deals_volume_match=268537, unmapped=181061
+
+7. DERIVED MEASURES
+      zero_ret  amihud
+year                  
+2014    1.0000  0.0003
+2015    1.0000  0.0001
+2016    1.0000  0.0000
+2017    1.0000  0.0001
+2018    0.9000  0.0014
+2019    0.9500  0.0008
+2020    0.9500  0.0009
+2021    0.8947  0.0010
+2022    0.8696  0.0008
+2023    0.7619  0.0015
+2024    0.7619  0.0011
+2025    0.6190  0.0007
+2026    0.5556  0.0003
+  broker weeks: 571; CR10(value) > 1.0 in 4 weeks (NGX % basis; see LIMITATIONS)
+
+8. SPOT CHECKS (look these up in the original PDFs; see docs/VERIFY_CHECKLIST.md)
+  2014-06-30 DANGCEM: close 240.0, deals 32, volume 286,997, value 68,326,305.68, board Main
+  2014-06-30 ACCESS: close 9.55, deals 124, volume 6,705,075, value 64,309,213.65, board Main
+  2016-06-20 NESTLE: close 794.88, deals 14, volume 189,975, value 151,007,328.00, board Main
+  2019-06-14 MTNN: close 135.6, deals 85, volume 2,165,363, value 293,502,605.15, board Premium
+  2020-03-23 ZENITHBANK: close 10.7, deals 1517, volume 120,456,307, value 1,302,219,999.35, board Premium
+  2023-06-14 GTCO: close 33.7, deals 930, volume 125,469,900, value 4,204,591,278.10, board Main
+  2026-10-23 ARADEL: close 1405.0, deals 1168, volume 2,999,502, value 4,201,546,421.10, board Main
+  2026-10-23 CHELLARAM: close 9.7, deals 2, volume 12, value 119.80, board Growth/ASeM

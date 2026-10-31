@@ -1,0 +1,28 @@
+{
+  "_comment": "Author block for NGX-DOL. Every document, citation file, Zenodo record and commit reads from here.",
+  "authors": [
+    {
+      "name": "John Amhanesi",
+      "family": "Amhanesi",
+      "given": "John",
+      "orcid": "0009-0003-5520-3403",
+      "email": "amhanesijohn@gmail.com",
+      "affiliation": "Independent Researcher, New York, USA",
+      "roles": [
+        "Conceptualization",
+        "Data curation",
+        "Methodology",
+        "Validation",
+        "Writing - original draft"
+      ],
+      "corresponding": true
+    }
+  ],
+  "github": "Osinoma",
+  "zenodo": "Osinoma",
+  "competing_interests": "The author designs and operates settlement and market-making architecture for the Nigerian equity market.",
+  "data_permission": "Not claimed. Security-level daily prices are withheld from v1.0 pending a written request to NGX; v1.0 releases derived measures and aggregates only.",
+  "release_mode": "measures",
+  "doi": "10.5281/zenodo.23823011",
+  "release_date": "2026-10-30"
+}

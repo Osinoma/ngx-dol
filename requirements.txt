@@ -1,0 +1,4 @@
+# Python packages (also requires the poppler `pdftotext` command: apt install poppler-utils / brew install poppler)
+pandas>=2.1
+numpy>=1.26
+matplotlib>=3.8

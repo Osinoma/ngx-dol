@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it as below."
+type: dataset
+title: "NGX-DOL: an open daily panel of the Nigerian equity market, 2014-2026"
+version: "{{version}}"
+date-released: "{{release_date}}"
+authors:
+  - family-names: "{{family}}"
+    given-names: "{{given}}"
+    orcid: "https://orcid.org/{{orcid}}"
+    affiliation: "{{affiliation}}"
+    email: "{{email}}"
+license: CC-BY-4.0
+repository-code: "https://github.com/{{github}}/ngx-dol"
+doi: "{{doi}}"
+abstract: "Open parser and derived liquidity measures for all equities listed on the Nigerian Exchange, {{first_date}} to {{last_date}}: security-month Amihud illiquidity, zero-return share and turnover, daily market totals and weekly broker-concentration indices, built from the NGX Data Library with a published QA log. The code rebuilds the full security-day panel from NGX public reports."
+keywords:
+  - Nigeria
+  - Nigerian Exchange
+  - NGX
+  - equity market
+  - market microstructure
+  - liquidity
+  - Amihud illiquidity
+  - frontier markets
+  - open data

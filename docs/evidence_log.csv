@@ -1,0 +1,2 @@
+date,artifact_or_event,type,venue_or_host,link_or_doi,status,prong_tags,metrics_snapshot,files_saved,notes
+2026-10-30,NGX-DOL v1.0.0 release,dataset,Zenodo,10.5281/zenodo.23823011,live,"P2, P3",0 downloads at release,zenodo record 23823011,"Derived-measures release after author verification (QUICK_CHECK 2026-10-30); full panel pending NGX permission request"
