@@ -1,0 +1,9 @@
+# Raw NGX files are not redistributed; interim and processed data are large and go to Zenodo.
+data/raw/*/
+data/raw/*.tsv
+data/interim/
+data/processed/*.csv
+release/
+__pycache__/
+.env
+*.token
